@@ -78,7 +78,7 @@ export class AppUpdate {
     }
     if (ctx.session.type === 'delete') {
       const todo = todos.find((t) => t.id === Number(message));
-      todos.splice(Number(message), 1);
+
       await ctx.reply(showList(todos.filter((t) => t.id !== Number(message))));
     }
   }
