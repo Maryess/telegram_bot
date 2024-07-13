@@ -1,11 +1,18 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
+import { TelegrafModule } from 'nestjs-telegraf';
+import * as LocalSession from 'telegraf-session-local';
 import { AppService } from './app.service';
-import { TaskModule } from './task/task.module';
+import { AppUpdate } from './app.update';
+
+const sessions = new LocalSession({ database: 'session_db.json' });
 
 @Module({
-  imports: [TaskModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    TelegrafModule.forRoot({
+      middlewares: [sessions.middleware()],
+      token: '7358886222:AAEOwlPiQyERP7FG4jhwugBvpNRgyioC3Z0',
+    }),
+  ],
+  providers: [AppService, AppUpdate],
 })
 export class AppModule {}
